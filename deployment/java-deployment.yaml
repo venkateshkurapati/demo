@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-java
+  template:
+    metadata:
+      labels:
+        app: my-java
+    spec:
+      containers:
+      - name: java-container
+        image: my-java:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-java-service
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: my-java
+  type: LoadBalancer
